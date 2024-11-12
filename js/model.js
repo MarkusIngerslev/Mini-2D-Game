@@ -1,7 +1,8 @@
 export default class Player {
-  constructor(x, y) {
+  constructor(x, y, speed = 100) {
     this.x = x;
     this.y = y;
+    this.speed = speed;
   }
 
   move(dx, dy) {

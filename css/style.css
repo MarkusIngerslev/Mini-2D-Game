@@ -1,26 +1,26 @@
-/* #main-container {
+#main-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
   background-color: #fff;
-  min-height: 100vh;
-} */
+  min-height: 90vh;
+}
 
 #gamefield {
-  width: 640px;
-  height: 480px;
-  /* width: 960px; */
-  /* height: 704px; */
+  /* width: 640px; */
+  /* height: 480px; */
+  width: 960px;
+  height: 704px;
   border: 2px solid #000;
   margin: 20px auto;
   background-color: #e0e0e0;
 }
 
 #player {
-  width: 64px; /* Adjust the width to the desired size */
-  height: 64px; /* Adjust the height to the desired size */
+  width: 64px; /* Width for the first character */
+  height: 64px; /* Hight for the first character */
   background: url("../assets/Character-3.png") no-repeat;
   background-size: 256px 256px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
