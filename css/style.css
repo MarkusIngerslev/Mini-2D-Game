@@ -11,10 +11,8 @@
 }
 
 #gamefield {
-  width: 640px;
-  height: 480px;
-  /* width: 960px; */
-  /* height: 704px; */
+  width: 960px;
+  height: 704px;
   border: 2px solid #000;
   margin: 20px auto;
   background-color: #e0e0e0;
@@ -27,5 +25,26 @@
   background-size: 256px 256px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
   position: absolute;
-  transform: translate(-50%, -50%);
+}
+
+#enemy {
+  width: 64px; /* Width for the first character */
+  height: 64px; /* Hight for the first character */
+  background: url("../assets/Character-5.png") no-repeat; 
+  background-size: 256px 256px; /* Size of the entire image */
+  background-position: 0 0; /* Position to show the top-left corner */
+  position: absolute;
+}
+
+.player-collide {
+  animation: blink 0.5s infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
