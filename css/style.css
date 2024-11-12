@@ -2,10 +2,12 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   box-sizing: border-box;
   background-color: #fff;
   min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #gamefield {
@@ -26,5 +28,4 @@
   background-position: 0 0; /* Position to show the top-left corner */
   position: absolute;
   transform: translate(-50%, -50%);
-  border: red 2px solid;
 }
