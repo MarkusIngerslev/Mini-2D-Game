@@ -1,9 +1,11 @@
 // imports
-import Player from "./model.js";
+import * as Model from "./model.js";
 import * as View from "./view.js";
 
 // Global variables
-const player = new Player(290, 210, 100);
+const player = new Model.Player(290, 210, 100);
+const enemy = new Model.Enemy(400, 100, 300);
+
 const controls = {
   left: false,
   right: false,
@@ -60,7 +62,7 @@ function handleKeyUp(event) {
 }
 
 // *************************
-//       Move player
+//     Player movement
 // *************************
 
 function movePlayer(deltaTime) {
@@ -94,6 +96,10 @@ function movePlayer(deltaTime) {
   View.displayPlayer(x, y);
 }
 
+// *************************
+//        Collision
+// *************************
+
 function canMove(player, position) {
   // Tjek om den nye position er inden for grænserne af gamefield
   return (
@@ -102,6 +108,34 @@ function canMove(player, position) {
     position.y >= 0 &&
     position.y <= GAMEFIELD_HEIGHT - 64
   );
+}
+
+function checkCollisions() {
+  const playerPos = player.getPosition();
+  const enemyPos = enemy.getPosition();
+
+  const isColliding =
+    playerPos.x < enemyPos.x + 64 &&
+    playerPos.x + 64 > enemyPos.x &&
+    playerPos.y < enemyPos.y + 64 &&
+    playerPos.y + 64 > enemyPos.y;
+
+  if (isColliding) {
+    View.applyCollisionEffect();
+  } else {
+    // Remove any collision effects if not colliding
+    View.removeCollisionEffect();
+  }
+}
+
+// *************************
+//      Enemy movement
+// *************************
+
+function moveEnemy(deltaTime) {
+  enemy.move(deltaTime);
+  const { x, y } = enemy.getPosition();
+  View.displayEnemy(x, y);
 }
 
 // *************************
@@ -117,8 +151,13 @@ function tick(timeStamp) {
 
   // Flyt figuren baseret på deltaTime og hastighed
   movePlayer(deltaTime);
+  moveEnemy(deltaTime);
+
+  // Tjek for kollision
+  checkCollisions();
 }
 
+// Start spillet
 requestAnimationFrame((timeStamp) => {
   lastTimestamp = timeStamp;
   tick(timeStamp);
