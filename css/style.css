@@ -11,29 +11,35 @@
 }
 
 #gamefield {
-  width: 960px;
-  height: 704px;
   border: 2px solid #000;
   margin: 20px auto;
   background-color: #e0e0e0;
+  display: inline-block;
+  position: relative;
+  width: fit-content; /* Adjust to background size */
+  height: fit-content; /* Adjust to background size */
+}
+
+#player,
+#enemy {
+  width: 32px; /* Width for the first character */
+  height: 32px; /* Hight for the first character */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Place above background */
 }
 
 #player {
-  width: 64px; /* Width for the first character */
-  height: 64px; /* Hight for the first character */
   background: url("../assets/images/character/Character-3.png") no-repeat;
-  background-size: 256px 256px; /* Size of the entire image */
+  background-size: 128px 128px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
-  position: absolute;
 }
 
 #enemy {
-  width: 64px; /* Width for the first character */
-  height: 64px; /* Hight for the first character */
   background: url("../assets/images/character/Character-5.png") no-repeat;
-  background-size: 256px 256px; /* Size of the entire image */
+  background-size: 128px 128px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
-  position: absolute;
 }
 
 .player-collide {

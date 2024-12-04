@@ -5,8 +5,10 @@ import * as View from "./view/view.js";
 import * as TilemapView from "./view/tilemap-view.js";
 
 // Global variables
-const player = new Model.Player(290, 210, 100);
-const enemy = new Model.Enemy(400, 100, 300);
+const player = new Model.Player(0, 160, 100);
+// const enemy = new Model.Enemy(192, 64, 100);
+// const enemy = new Model.Enemy(192, 64, 50, 1, "horizontal");
+const enemy = new Model.Enemy(192, 64, 50, 1, "vertical");
 
 const controls = {
   left: false,
@@ -14,9 +16,6 @@ const controls = {
   up: false,
   down: false,
 };
-
-const GAMEFIELD_WIDTH = 640;
-const GAMEFIELD_HEIGHT = 480;
 
 let lastTimestamp = 0;
 
@@ -68,12 +67,9 @@ function handleKeyUp(event) {
 // *************************
 
 function movePlayer(deltaTime) {
-  // Start position for player
   const position = { x: player.x, y: player.y };
-  // Beregn distance baseret på deltaTime
   const distance = player.speed * (deltaTime / 1000);
 
-  // Tjek om en tast er trykket ned og flyt positionen
   if (controls.up) {
     position.y -= distance;
   }
@@ -87,13 +83,11 @@ function movePlayer(deltaTime) {
     position.x += distance;
   }
 
-  // Tjek om figuren kan flyttes til den nye position
   if (canMove(player, position)) {
     player.x = position.x;
     player.y = position.y;
   }
 
-  // Opdater visningen
   View.displayPlayer(player.x, player.y);
 }
 
@@ -102,9 +96,21 @@ function movePlayer(deltaTime) {
 // *************************
 
 function canMove(player, position) {
+  // Check tilemap collision
   const coord = TilemapModel.coordFromPos(position);
   const tile = TilemapModel.getTileAtCoord(coord);
-  return tile !== TilemapModel.TILE_TYPES.OBSTACLE;
+
+  // Check map boundaries
+  const maxX = TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 32; // Player width
+  const maxY = TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 32; // Player height
+
+  return (
+    tile !== TilemapModel.TILE_TYPES.OBSTACLE &&
+    position.x >= 0 &&
+    position.x <= maxX &&
+    position.y >= 0 &&
+    position.y <= maxY
+  );
 }
 
 function checkCollisions() {
@@ -112,10 +118,10 @@ function checkCollisions() {
   const enemyPos = enemy.getPosition();
 
   const isColliding =
-    playerPos.x < enemyPos.x + 64 &&
-    playerPos.x + 64 > enemyPos.x &&
-    playerPos.y < enemyPos.y + 64 &&
-    playerPos.y + 64 > enemyPos.y;
+    playerPos.x < enemyPos.x + 32 &&
+    playerPos.x + 32 > enemyPos.x &&
+    playerPos.y < enemyPos.y + 32 &&
+    playerPos.y + 32 > enemyPos.y;
 
   if (isColliding) {
     View.applyCollisionEffect();
@@ -141,15 +147,12 @@ function moveEnemy(deltaTime) {
 function tick(timeStamp) {
   requestAnimationFrame(tick);
 
-  // Beregn deltaTime
   const deltaTime = timeStamp - lastTimestamp;
   lastTimestamp = timeStamp;
 
-  // Flyt figuren baseret på deltaTime og hastighed
   movePlayer(deltaTime);
   moveEnemy(deltaTime);
 
-  // Tjek for kollision
   checkCollisions();
 }
 
