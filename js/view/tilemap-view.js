@@ -9,6 +9,7 @@ const TILE_CLASSES = {
   4: "water",
   5: "door",
   6: "roof",
+  7:  "flower",
 };
 
 function getClassForTiletype(tileType) {

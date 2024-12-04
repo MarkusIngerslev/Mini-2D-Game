@@ -6,9 +6,9 @@ import * as TilemapView from "./view/tilemap-view.js";
 
 // Global variables
 const player = new Model.Player(0, 160, 100);
-// const enemy = new Model.Enemy(192, 64, 100);
+
 // const enemy = new Model.Enemy(192, 64, 50, 1, "horizontal");
-const enemy = new Model.Enemy(192, 64, 50, 1, "vertical");
+const enemy = new Model.Enemy(192, 64, 50, 1, "vertical", 64);
 
 const controls = {
   left: false,
