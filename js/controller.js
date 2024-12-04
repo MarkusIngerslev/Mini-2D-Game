@@ -1,6 +1,8 @@
-// imports
-import * as Model from "./model.js";
-import * as View from "./view.js";
+import * as Model from "./model/model.js";
+import * as TilemapModel from "./model/tilemap-model.js";
+
+import * as View from "./view/view.js";
+import * as TilemapView from "./view/tilemap-view.js";
 
 // Global variables
 const player = new Model.Player(290, 210, 100);
@@ -92,8 +94,7 @@ function movePlayer(deltaTime) {
   }
 
   // Opdater visningen
-  const { x, y } = player.getPosition();
-  View.displayPlayer(x, y);
+  View.displayPlayer(player.x, player.y);
 }
 
 // *************************
@@ -101,13 +102,9 @@ function movePlayer(deltaTime) {
 // *************************
 
 function canMove(player, position) {
-  // Tjek om den nye position er inden for grænserne af gamefield
-  return (
-    position.x >= 0 &&
-    position.x <= GAMEFIELD_WIDTH - 64 &&
-    position.y >= 0 &&
-    position.y <= GAMEFIELD_HEIGHT - 64
-  );
+  const coord = TilemapModel.coordFromPos(position);
+  const tile = TilemapModel.getTileAtCoord(coord);
+  return tile !== TilemapModel.TILE_TYPES.OBSTACLE;
 }
 
 function checkCollisions() {
@@ -123,7 +120,6 @@ function checkCollisions() {
   if (isColliding) {
     View.applyCollisionEffect();
   } else {
-    // Remove any collision effects if not colliding
     View.removeCollisionEffect();
   }
 }
@@ -158,6 +154,7 @@ function tick(timeStamp) {
 }
 
 // Start spillet
+TilemapView.start();
 requestAnimationFrame((timeStamp) => {
   lastTimestamp = timeStamp;
   tick(timeStamp);

@@ -1,0 +1,42 @@
+#background {
+  display: grid;
+  grid-template-columns: repeat(var(--GRID_WIDTH), var(--TILE_SIZE));
+  gap: 0;
+  width: fit-content;
+  background: #000;
+  padding: 0;
+}
+
+.tile {
+  width: var(--TILE_SIZE);
+  height: var(--TILE_SIZE);
+  background-size: cover;
+}
+
+.background {
+  background-image: url("../assets/images/tiles/grass.png");
+}
+
+.path {
+  background-image: url("../assets/images/tiles/path.png");
+}
+
+.wall {
+  background-image: url("../assets/images/tiles/wall.png");
+}
+
+.tree {
+  background-image: url("../assets/images/tiles/tree.png");
+}
+
+.water {
+  background-image: url("../assets/images/tiles/water.png");
+}
+
+.door {
+  background-image: url("../assets/images/tiles/door.png");
+}
+
+.roof {
+  background-image: url("../assets/images/tiles/redwall.png");
+}
