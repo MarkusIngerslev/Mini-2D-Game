@@ -22,8 +22,8 @@
 
 #player,
 #enemy {
-  width: 32px; /* Width for the first character */
-  height: 32px; /* Hight for the first character */
+  width: 24px; /* Width for the first character */
+  height: 24px; /* Hight for the first character */
   position: absolute;
   top: 0;
   left: 0;
@@ -32,13 +32,13 @@
 
 #player {
   background: url("../assets/images/character/Character-3.png") no-repeat;
-  background-size: 128px 128px; /* Size of the entire image */
+  background-size: 96px 96px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
 }
 
 #enemy {
   background: url("../assets/images/character/Character-5.png") no-repeat;
-  background-size: 128px 128px; /* Size of the entire image */
+  background-size: 96px 96px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
 }
 

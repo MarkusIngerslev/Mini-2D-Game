@@ -1,8 +1,8 @@
 // Tile types
 const TILE_TYPES = {
-  BACKGROUND: 0,
-  WALKABLE: 1,
-  OBSTACLE: 2,
+  BACKGROUND: [0, 7], // grass and flowers
+  WALKABLE: [1, 5, 6], // path, door, roof
+  OBSTACLE: [2, 3, 4], // wall, tree, water
 };
 
 // The tilemap model (16x10)
@@ -54,6 +54,15 @@ function getTileAtPos({ x, y }) {
   return getTileAtCoord(coord);
 }
 
+function getTileCategory(tileValue) {
+  for (const [category, values] of Object.entries(TILE_TYPES)) {
+    if (values.includes(tileValue)) {
+      return category;
+    }
+  }
+  return "BACKGROUND"; // Default fallback
+}
+
 export {
   TILE_TYPES,
   tiles,
@@ -64,4 +73,5 @@ export {
   posFromCoord,
   coordFromPos,
   getTileAtPos,
+  getTileCategory,
 };

@@ -34,17 +34,17 @@ class Enemy {
     if (movementType === "horizontal") {
       this.minX = Math.max(0, this.initialX - range);
       this.maxX = Math.min(
-        TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 32,
+        TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 24,
         this.initialX + range
       );
       this.minY = 0;
-      this.maxY = TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 32;
+      this.maxY = TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 24;
     } else {
       this.minX = 0;
-      this.maxX = TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 32;
+      this.maxX = TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 24;
       this.minY = Math.max(0, this.initialY - range);
       this.maxY = Math.min(
-        TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 32,
+        TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 24,
         this.initialY + range
       );
     }
@@ -52,22 +52,37 @@ class Enemy {
 
   move(deltaTime) {
     const distance = this.speed * (deltaTime / 1000) * this.direction;
+    const position = { x: this.x, y: this.y };
 
     if (this.movementType === "horizontal") {
-      const newX = this.x + distance;
-      if (newX <= this.minX || newX >= this.maxX) {
+      position.x += distance;
+      if (
+        position.x <= this.minX ||
+        position.x >= this.maxX ||
+        !this.canMove(position)
+      ) {
         this.direction *= -1;
       } else {
-        this.x = newX;
+        this.x = position.x;
       }
     } else if (this.movementType === "vertical") {
-      const newY = this.y + distance;
-      if (newY <= this.minY || newY >= this.maxY) {
+      position.y += distance;
+      if (
+        position.y <= this.minY ||
+        position.y >= this.maxY ||
+        !this.canMove(position)
+      ) {
         this.direction *= -1;
       } else {
-        this.y = newY;
+        this.y = position.y;
       }
     }
+  }
+
+  canMove(position) {
+    const coord = TilemapModel.coordFromPos(position);
+    const tile = TilemapModel.getTileAtCoord(coord);
+    return TilemapModel.getTileCategory(tile) !== "OBSTACLE";
   }
 
   getPosition() {

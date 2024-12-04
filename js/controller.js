@@ -8,7 +8,7 @@ import * as TilemapView from "./view/tilemap-view.js";
 const player = new Model.Player(0, 160, 100);
 
 // const enemy = new Model.Enemy(192, 64, 50, 1, "horizontal");
-const enemy = new Model.Enemy(192, 64, 50, 1, "vertical", 64);
+const enemy = new Model.Enemy(194, 64, 50, 1, "vertical", 64);
 
 const controls = {
   left: false,
@@ -96,16 +96,28 @@ function movePlayer(deltaTime) {
 // *************************
 
 function canMove(player, position) {
-  // Check tilemap collision
-  const coord = TilemapModel.coordFromPos(position);
-  const tile = TilemapModel.getTileAtCoord(coord);
+  // Check all corners of the player sprite
+  const corners = [
+    { x: position.x, y: position.y }, // Top-left
+    { x: position.x + 23, y: position.y }, // Top-right
+    { x: position.x, y: position.y + 23 }, // Bottom-left
+    { x: position.x + 23, y: position.y + 23 }, // Bottom-right
+  ];
 
   // Check map boundaries
-  const maxX = TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 32; // Player width
-  const maxY = TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 32; // Player height
+  const maxX = TilemapModel.MAP_WIDTH * TilemapModel.TILE_SIZE - 24;
+  const maxY = TilemapModel.MAP_HEIGHT * TilemapModel.TILE_SIZE - 24;
+
+  // Check if any corner is in an obstacle
+  for (const corner of corners) {
+    const tile = TilemapModel.getTileAtPos(corner);
+    const category = TilemapModel.getTileCategory(tile);
+    if (category === "OBSTACLE") {
+      return false;
+    }
+  }
 
   return (
-    tile !== TilemapModel.TILE_TYPES.OBSTACLE &&
     position.x >= 0 &&
     position.x <= maxX &&
     position.y >= 0 &&
@@ -118,10 +130,10 @@ function checkCollisions() {
   const enemyPos = enemy.getPosition();
 
   const isColliding =
-    playerPos.x < enemyPos.x + 32 &&
-    playerPos.x + 32 > enemyPos.x &&
-    playerPos.y < enemyPos.y + 32 &&
-    playerPos.y + 32 > enemyPos.y;
+    playerPos.x < enemyPos.x + 24 &&
+    playerPos.x + 24 > enemyPos.x &&
+    playerPos.y < enemyPos.y + 24 &&
+    playerPos.y + 24 > enemyPos.y;
 
   if (isColliding) {
     View.applyCollisionEffect();
