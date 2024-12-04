@@ -22,12 +22,13 @@
 
 #player,
 #enemy {
-  width: 24px; /* Width for the first character */
-  height: 24px; /* Hight for the first character */
+  width: 24px;
+  height: 24px;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* Place above background */
+  z-index: 1;
+  background-size: 96px 96px;
 }
 
 #player {
@@ -52,5 +53,79 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+/* Then update the walking animation for each direction */
+.face-down.walking {
+  animation: walk-down 0.6s steps(1) infinite;
+}
+
+.face-up.walking {
+  animation: walk-up 0.6s steps(1) infinite;
+}
+
+.face-left.walking {
+  animation: walk-left 0.6s steps(1) infinite;
+}
+
+.face-right.walking {
+  animation: walk-right 0.6s steps(1) infinite;
+}
+
+/* Add separate keyframes for each direction */
+@keyframes walk-down {
+  0%,
+  50%,
+  100% {
+    background-position: 0px 0px;
+  }
+  25% {
+    background-position: -24px 0px;
+  }
+  75% {
+    background-position: -72px 0px;
+  }
+}
+
+@keyframes walk-up {
+  0%,
+  50%,
+  100% {
+    background-position: 0px -24px;
+  }
+  25% {
+    background-position: -24px -24px;
+  }
+  75% {
+    background-position: -72px -24px;
+  }
+}
+
+@keyframes walk-left {
+  0%,
+  50%,
+  100% {
+    background-position: 0px -48px;
+  }
+  25% {
+    background-position: -24px -48px;
+  }
+  75% {
+    background-position: -72px -48px;
+  }
+}
+
+@keyframes walk-right {
+  0%,
+  50%,
+  100% {
+    background-position: 0px -72px;
+  }
+  25% {
+    background-position: -24px -72px;
+  }
+  75% {
+    background-position: -72px -72px;
   }
 }

@@ -5,6 +5,18 @@ class Player {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    this.direction = "down";
+    this.isMoving = false;
+  }
+
+  updateState(controls) {
+    this.isMoving =
+      controls.up || controls.down || controls.left || controls.right;
+
+    if (controls.up) this.direction = "up";
+    else if (controls.down) this.direction = "down";
+    else if (controls.left) this.direction = "left";
+    else if (controls.right) this.direction = "right";
   }
 
   getPosition() {
@@ -29,6 +41,8 @@ class Enemy {
     this.direction = direction;
     this.movementType = movementType;
     this.range = range;
+    this.facing = movementType === "horizontal" ? "right" : "down";
+    this.isMoving = true;
 
     // Calculate boundaries based on range and map limits
     if (movementType === "horizontal") {
@@ -56,6 +70,8 @@ class Enemy {
 
     if (this.movementType === "horizontal") {
       position.x += distance;
+      this.facing = this.direction > 0 ? "right" : "left";
+
       if (
         position.x <= this.minX ||
         position.x >= this.maxX ||
@@ -67,6 +83,8 @@ class Enemy {
       }
     } else if (this.movementType === "vertical") {
       position.y += distance;
+      this.facing = this.direction > 0 ? "down" : "up";
+
       if (
         position.y <= this.minY ||
         position.y >= this.maxY ||

@@ -5,10 +5,10 @@ import * as View from "./view/view.js";
 import * as TilemapView from "./view/tilemap-view.js";
 
 // Global variables
-const player = new Model.Player(0, 160, 100);
+const player = new Model.Player(0, 164, 100);
 
 // const enemy = new Model.Enemy(192, 64, 50, 1, "horizontal");
-const enemy = new Model.Enemy(194, 64, 50, 1, "vertical", 64);
+const enemy = new Model.Enemy(196, 64, 50, 1, "vertical", 64);
 
 const controls = {
   left: false,
@@ -70,6 +70,8 @@ function movePlayer(deltaTime) {
   const position = { x: player.x, y: player.y };
   const distance = player.speed * (deltaTime / 1000);
 
+  player.updateState(controls);
+
   if (controls.up) {
     position.y -= distance;
   }
@@ -88,7 +90,7 @@ function movePlayer(deltaTime) {
     player.y = position.y;
   }
 
-  View.displayPlayer(player.x, player.y);
+  View.displayPlayer(player.x, player.y, player.direction, player.isMoving);
 }
 
 // *************************
@@ -149,7 +151,7 @@ function checkCollisions() {
 function moveEnemy(deltaTime) {
   enemy.move(deltaTime);
   const { x, y } = enemy.getPosition();
-  View.displayEnemy(x, y);
+  View.displayEnemy(x, y, enemy.facing, enemy.isMoving);
 }
 
 // *************************
