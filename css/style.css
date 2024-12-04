@@ -21,7 +21,7 @@
 #player {
   width: 64px; /* Width for the first character */
   height: 64px; /* Hight for the first character */
-  background: url("../assets/Character-3.png") no-repeat;
+  background: url("../assets/images/character/Character-3.png") no-repeat;
   background-size: 256px 256px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
   position: absolute;
@@ -30,7 +30,7 @@
 #enemy {
   width: 64px; /* Width for the first character */
   height: 64px; /* Hight for the first character */
-  background: url("../assets/Character-5.png") no-repeat; 
+  background: url("../assets/images/character/Character-5.png") no-repeat;
   background-size: 256px 256px; /* Size of the entire image */
   background-position: 0 0; /* Position to show the top-left corner */
   position: absolute;
